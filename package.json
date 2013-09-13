@@ -1,0 +1,23 @@
+{
+  "name": "contentsecure",
+  "version": "0.0.0",
+  "description": "A content security policy (CSP) generator for static website assets",
+  "main": "lib/csp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "csp",
+    "security",
+    "xss",
+    "frontend"
+  ],
+  "author": "Peter Müller <munter@fumle.dk>",
+  "license": "BSD",
+  "dependencies": {
+    "assetgraph": "=1.6.0beta22",
+    "optimist": "=0.6.0"
+  },
+  "bin": "./bin/contentsecure"
+}

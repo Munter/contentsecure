@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+
+//var optimist = require('optimist');
+var optimist = require('optimist'),
+    commandLineOptions = optimist
+        .usage('Output a content security policy for your web site')
+        .options('h', {
+            alias: 'help',
+            describe: 'Show this help',
+            type: 'boolean',
+            default: false
+        })
+        .options('r', {
+            alias: 'root',
+            describe: 'Path to your web root. Omission will result in optimistic guessing',
+            type: 'string',
+            demand: false
+        })
+        .options('report', {
+            describe: 'Report only',
+            type: 'boolean',
+            default: false
+        })
+        .wrap(72)
+        .argv;
+
+if (commandLineOptions.h || commandLineOptions._.length === 0) {
+    optimist.showHelp();
+    process.exit(1);
+}
+
+var urlTools = require('assetgraph/lib/util/urlTools'),
+    rootUrl = commandLineOptions.root && urlTools.urlOrFsPathToUrl(commandLineOptions.root, true),
+    inputUrls;
+
+if (commandLineOptions._.length > 0) {
+    inputUrls = commandLineOptions._.map(function (urlOrFsPath) {
+        return urlTools.urlOrFsPathToUrl(urlOrFsPath, false);
+    });
+    if (!rootUrl) {
+        rootUrl = urlTools.findCommonUrlPrefix(inputUrls.filter(function (inputUrl) {
+            return (/^file:/).test(inputUrl);
+        }));
+    }
+} else if (rootUrl && /^file:/.test(rootUrl)) {
+    inputUrls = [rootUrl + '**/*.html'];
+    console.warn('No input files specified, defaulting to ' + inputUrls[0]);
+} else {
+    throw new Error("No input files and no --root specified (or it isn't file:), cannot proceed");
+}
+
+if (!rootUrl && inputUrls.length === 1) {
+    rootUrl = inputUrls[0];
+}
+
+
+var AssetGraph = require('assetgraph'),
+    csp = require('../lib/csp');
+
+AssetGraph.registerTransform(csp, 'csp');
+
+new AssetGraph({root: rootUrl})
+    .on('error', function (err) {
+        console.error(' ✘ '.red + err.message);
+    })
+    .on('warn', function (asset) {
+        if (asset.url) {
+            console.warn(' ! '.yellow + asset.url);
+        }
+    })
+    .registerRequireJsConfig()
+    .loadAssets(inputUrls)
+    .populate({followRelations: followRelationsQueryObj})
+    .queue(function fixBaseAssetsOfUnresolvedOutgoingRelationsFromHtmlFragments(assetGraph) {
+        assetGraph.findRelations({from: {type: 'Html', isFragment: true, isInitial: true}}, true).forEach(function (relation) {
+            if (relation._baseAssetPath === null) {
+                delete relation._baseAssetPath;
+            }
+        });
+    })
+    .populate({followRelations: followRelationsQueryObj, startAssets: {type: 'Html', isFragment: true, isInitial: true}})
+    .csp(function (value) {
+        console.log('foo');
+        console.log(value);
+    })
+    .run(function (err) {
+        if (err) {
+            throw err;
+        }
+    });
