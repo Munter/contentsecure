@@ -16,10 +16,10 @@ var optimist = require('optimist'),
             type: 'string',
             demand: false
         })
-        .options('report', {
-            describe: 'Report only',
-            type: 'boolean',
-            default: false
+        .options('report-uri', {
+            describe: 'The report URI to send security violation reports to',
+            type: 'string',
+            demand: false
         })
         .wrap(72)
         .argv;
@@ -90,7 +90,9 @@ new AssetGraph({root: rootUrl})
     })
     .populate({followRelations: followRelationsQueryObj, startAssets: {type: 'Html', isFragment: true, isInitial: true}})
     .convertCssImportsToHtmlStyles()
-    .csp()
+    .csp({
+        'report-uri': commandLineOptions['report-uri']
+    })
     .run(function (err) {
         if (err) {
             throw err;
