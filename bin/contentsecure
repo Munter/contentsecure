@@ -46,7 +46,7 @@ if (commandLineOptions._.length > 0) {
     inputUrls = [rootUrl + '**/*.html'];
     console.warn('No input files specified, defaulting to ' + inputUrls[0]);
 } else {
-    throw new Error("No input files and no --root specified (or it isn't file:), cannot proceed");
+    throw new Error('No input files and no --root specified (or it isn\'t file:), cannot proceed');
 }
 
 if (!rootUrl && inputUrls.length === 1) {
@@ -55,7 +55,12 @@ if (!rootUrl && inputUrls.length === 1) {
 
 
 var AssetGraph = require('assetgraph'),
-    csp = require('../lib/csp');
+    query = AssetGraph.query,
+    csp = require('../lib/csp'),
+    colors = require('colors'),
+    followRelationsQueryObj = {
+        to: {url: query.not(/^(?:https?:)\/\//)}
+    };
 
 AssetGraph.registerTransform(csp, 'csp');
 
@@ -66,6 +71,11 @@ new AssetGraph({root: rootUrl})
     .on('warn', function (asset) {
         if (asset.url) {
             console.warn(' ! '.yellow + asset.url);
+        }
+    })
+    .on('addAsset', function (asset) {
+        if (asset.url) {
+            //console.warn(' ✔ '.green + asset.url);
         }
     })
     .registerRequireJsConfig()
@@ -79,10 +89,8 @@ new AssetGraph({root: rootUrl})
         });
     })
     .populate({followRelations: followRelationsQueryObj, startAssets: {type: 'Html', isFragment: true, isInitial: true}})
-    .csp(function (value) {
-        console.log('foo');
-        console.log(value);
-    })
+    .convertCssImportsToHtmlStyles()
+    .csp()
     .run(function (err) {
         if (err) {
             throw err;

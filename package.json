@@ -17,6 +17,7 @@
   "license": "BSD",
   "dependencies": {
     "assetgraph": "=1.6.0beta22",
+    "colors": "*",
     "optimist": "=0.6.0"
   },
   "bin": "./bin/contentsecure"
