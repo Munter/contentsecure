@@ -5,11 +5,17 @@
         <meta charset="utf-8">
         <title>Content security policy test</title>
         <link rel="stylesheet" href="//cdn.fakehost.com:3001/pure.css">
+
+        <style>
+            body: {
+                stupid: true;
+            }
+        </style>
     </head>
 
     <body class="pure-skin-highgrounds">
 
-        <img src="//cdn.fakehost.com:3001/logo.png">
+        <img src="//cdn.fakehost.com:3001/logo.png" style="stupid: true">
         <img src="//cdn.fakehost.com:3001/logo.png">
         <img src="//cdn.fakehost.com:3001/logo.png">
         <img src="//cdn.fakehost.com:3001/logo.png" onclick="alert('stupid')">
