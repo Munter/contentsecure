@@ -3,7 +3,7 @@
 //var optimist = require('optimist');
 var optimist = require('optimist'),
     commandLineOptions = optimist
-        .usage('Output a content security policy for your web site')
+        .usage('Output a content security policy for your web site. Takes either a web root of your site as option, or any number of html-files as arguments.')
         .options('h', {
             alias: 'help',
             describe: 'Show this help',
@@ -15,6 +15,12 @@ var optimist = require('optimist'),
             describe: 'Path to your web root. Omission will result in optimistic guessing',
             type: 'string',
             demand: false
+        })
+        .options('d', {
+            alias: 'debug',
+            describe: 'Debug. Sets report only mode on the resulting security policy to test the policy.',
+            type: 'boolean',
+            default: false
         })
         .options('report-uri', {
             describe: 'The report URI to send security violation reports to',
@@ -91,7 +97,8 @@ new AssetGraph({root: rootUrl})
     .populate({followRelations: followRelationsQueryObj, startAssets: {type: 'Html', isFragment: true, isInitial: true}})
     .convertCssImportsToHtmlStyles()
     .csp({
-        'report-uri': commandLineOptions['report-uri']
+        'report-uri': commandLineOptions['report-uri'],
+        'debug': commandLineOptions.debug
     })
     .run(function (err) {
         if (err) {
