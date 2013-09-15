@@ -27,6 +27,21 @@ var optimist = require('optimist'),
             type: 'string',
             demand: false
         })
+        .options('script-unsafe-inline', {
+            describe: 'Accepts inline javascript event handlers',
+            type: 'boolean',
+            default: false
+        })
+        .options('script-unsafe-eval', {
+            describe: 'Accepts use of eval',
+            type: 'boolean',
+            default: false
+        })
+        .options('style-unsafe-inline', {
+            describe: 'Accepts style attributes and inlined style sheets',
+            type: 'boolean',
+            default: false
+        })
         .wrap(72)
         .argv;
 
@@ -98,7 +113,10 @@ new AssetGraph({root: rootUrl})
     .convertCssImportsToHtmlStyles()
     .csp({
         'report-uri': commandLineOptions['report-uri'],
-        'debug': commandLineOptions.debug
+        'debug': commandLineOptions.debug,
+        'script-unsafe-inline': commandLineOptions['script-unsafe-inline'],
+        'script-unsafe-eval': commandLineOptions['script-unsafe-eval'],
+        'style-unsafe-inline': commandLineOptions['style-unsafe-inline']
     })
     .run(function (err) {
         if (err) {
