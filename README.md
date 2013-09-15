@@ -1,11 +1,11 @@
 contentsecure
 =============
 
-A Content Security Policy auto generator.[
+A Content Security Policy auto generator.
 
 Read more about [Content Security Policies](http://www.w3.org/TR/CSP/).
 
-This binary will return a string that you can use as an http-header in your web server responses, which in tun will make browsers that support Content Security Policies follow this policy.
+This binary will return a string that you can use as an http-header in your web server responses, which in turn will make browsers that support Content Security Policies follow this policy.
 
 
 Installation
@@ -27,7 +27,7 @@ Example:
 contentsecure path/to/index.html /path/to/404.html /path/to/docs/**/*.html
 ```
 
-Note that you usually only need to set entry pages as a seed for contentsecure, since it finds dependencies nad relations itself.
+Note that you usually only need to set entry pages as a seed for contentsecure, since it finds dependencies and relations itself.
 
 
 TODO
