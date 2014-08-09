@@ -19,6 +19,7 @@
     "assetgraph": "^1.6.26",
     "colors": "*",
     "optimist": "=0.6.0",
+    "underscore": "^1.6.0",
     "urltools": "^0.1.0"
   },
   "bin": "./bin/contentsecure"
