@@ -52,7 +52,7 @@ if (commandLineOptions.h) {
 
 var urlTools = require('urltools'),
     rootUrl = commandLineOptions.root && urlTools.urlOrFsPathToUrl(commandLineOptions.root, true),
-    colors = require('colors'),
+    chalk = require('chalk'),
     inputUrls;
 
 if (commandLineOptions._.length > 0) {
@@ -68,7 +68,7 @@ if (commandLineOptions._.length > 0) {
     inputUrls = [rootUrl + '**/*.html'];
     console.warn('No input files specified, defaulting to ' + inputUrls[0]);
 } else {
-    console.error('No input files and no --root specified (or it isn\'t file://), cannot proceed'.red);
+    console.error(chalk.red('No input files and no --root specified (or it isn\'t file://), cannot proceed'));
     optimist.showHelp();
     process.exit(1);
 }
@@ -81,7 +81,6 @@ if (!rootUrl && inputUrls.length === 1) {
 var AssetGraph = require('assetgraph'),
     query = AssetGraph.query,
     csp = require('../lib/csp'),
-    colors = require('colors'),
     followRelationsQueryObj = {
         to: {url: query.not(/^(?:https?:)\/\//)}
     };
@@ -90,16 +89,16 @@ AssetGraph.registerTransform(csp, 'csp');
 
 new AssetGraph({root: rootUrl})
     .on('error', function (err) {
-        console.error(' ✘ '.red + err.message);
+        console.error(chalk.red(' ✘ ') + err.message);
     })
     .on('warn', function (asset) {
         if (asset.url) {
-            console.warn(' ! '.yellow + asset.url);
+            console.warn(chalk.yellow(' ! ') + asset.url);
         }
     })
     .on('addAsset', function (asset) {
         if (asset.url) {
-            //console.warn(' ✔ '.green + asset.url);
+            //console.warn(chalk.green(' ✔ ') + asset.url);
         }
     })
     .registerRequireJsConfig()
