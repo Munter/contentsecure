@@ -16,9 +16,10 @@
   "author": "Peter Müller <munter@fumle.dk>",
   "license": "BSD",
   "dependencies": {
-    "assetgraph": "^1.6.26",
+    "assetgraph": "^1.7.4",
     "colors": "*",
     "optimist": "=0.6.0",
+    "underscore": "^1.6.0",
     "urltools": "^0.1.0"
   },
   "bin": "./bin/contentsecure"
