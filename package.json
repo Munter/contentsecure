@@ -1,6 +1,6 @@
 {
   "name": "contentsecure",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A content security policy (CSP) generator for static website assets",
   "main": "lib/csp.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "urltools": "^0.1.0"
   },
   "bin": "./bin/contentsecure",
-  "files":[
+  "files": [
     "lib",
     "bin"
   ]
