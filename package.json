@@ -22,5 +22,9 @@
     "underscore": "^1.6.0",
     "urltools": "^0.1.0"
   },
-  "bin": "./bin/contentsecure"
+  "bin": "./bin/contentsecure",
+  "files":[
+    "lib",
+    "bin"
+  ]
 }
