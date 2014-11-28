@@ -1,5 +1,9 @@
 contentsecure
 =============
+[![NPM version](https://badge.fury.io/js/contentsecure.png)](http://badge.fury.io/js/contentsecure)
+[![Build Status](https://travis-ci.org/Munter/contentsecure.png?branch=master)](https://travis-ci.org/Munter/contentsecure)
+[![Coverage Status](https://coveralls.io/repos/Munter/contentsecure/badge.png)](https://coveralls.io/r/Munter/contentsecure)
+[![Dependency Status](https://david-dm.org/Munter/contentsecure.png)](https://david-dm.org/Munter/contentsecure)
 
 A Content Security Policy auto generator.
 
