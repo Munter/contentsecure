@@ -1,5 +1,13 @@
-contentsecure
-=============
+Deprecation notice
+==================
+
+This project is replaced by the [reviewContentSecurityPolicy](https://github.com/assetgraph/assetgraph/blob/master/lib/transforms/reviewContentSecurityPolicy.js) transform in [Assetgraph](https://github.com/assetgraph/assetgraph).
+
+The transform is set up in [Assetgraph-builder](https://github.com/assetgraph/assetgraph-builder) as well, which gives you aneasy to consume commend line tool to build your page and keep your CSP-rules tested and up to date.
+
+
+contentsecure (DEPRECATED)
+==========================
 [![NPM version](https://badge.fury.io/js/contentsecure.png)](http://badge.fury.io/js/contentsecure)
 [![Build Status](https://travis-ci.org/Munter/contentsecure.png?branch=master)](https://travis-ci.org/Munter/contentsecure)
 [![Coverage Status](https://coveralls.io/repos/Munter/contentsecure/badge.png)](https://coveralls.io/r/Munter/contentsecure)
